@@ -27,14 +27,40 @@ toggle_strategy = st.radio("Carve-Out Strategy Source", [
 ])
 
 # Section 2: CPT Code Logic
-if gene_count > 50:
-    recommended_cpt = "81455"
-    reimbursement = 2919.60
+if test_type == "Whole Exome (WES)":
+    recommended_cpt = "81415"
+    reimbursement = 2498.53
+    flagged_payers = []
+    warning = "WES often requires detailed documentation. Coverage varies by payer."
+elif test_type == "Whole Genome (WGS)":
+    recommended_cpt = "81425"
+    reimbursement = 5500.00
+    flagged_payers = []
+    warning = "WGS CPT 81425 is high-value but often requires prior auth and justification."
+elif test_type == "Liquid Biopsy – ctDNA":
+    recommended_cpt = "81479"
+    reimbursement = 500.00
+    flagged_payers = ["Most commercial payers"]
+    warning = (
+        "Liquid biopsy is often billed using unlisted code 81479 or proprietary PLA codes like 0239U or 0250U. "
+        "Reimbursement varies widely and denials are common without prior auth or documentation that tissue testing was not possible."
+    )
+elif gene_count > 50:
+    if "RNA" in test_type and "DNA" not in test_type:
+        recommended_cpt = "81456"
+        reimbursement = 2919.60
+    else:
+        recommended_cpt = "81455"
+        reimbursement = 2919.60
     flagged_payers = ["UnitedHealthcare", "Aetna", "Cigna", "Blue Cross Blue Shield", "Humana"]
     warning = "Many private payers restrict reimbursement for panels >50 genes. Often reimbursed at 81450 rate or denied unless clinical justification is strong."
 else:
-    recommended_cpt = "81450"
-    reimbursement = 759.53
+    if "RNA" in test_type and "DNA" not in test_type:
+        recommended_cpt = "81451"
+        reimbursement = 759.53
+    else:
+        recommended_cpt = "81450"
+        reimbursement = 759.53
     flagged_payers = []
     warning = "Generally covered for hereditary or myeloid panels ≤50 genes."
 
