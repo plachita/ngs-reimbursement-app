@@ -1,0 +1,6 @@
+test_name,cpt_code,payer,denial_risk,estimated_reimbursement
+Myeloid Panel 65,81455,BCBS,High,600
+Fusion Panel RNA,81449,UHC,Medium,800
+Lung ctDNA 50g,0326U,Medicare,Low,1200
+AML DNA Panel,81450,Aetna,High,700
+Breast RNA/DNA,81455,Humana,Medium,900
